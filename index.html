@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Конвертер валют</title>
+  <link rel="stylesheet" type="text/css" href="Style_7_4.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Конвертер валют</h1>
+    <label for="amount">Введите сумму:</label>
+    <input type="number" id="amount" placeholder="Сумма">
+    <label for="currency">Выберите валюту:</label>
+    <select id="currency" onchange="updateConversion()">
+      <option value="KZT">Тенге (KZT)</option>
+      <option value="USD">Доллар США (USD)</option>
+      <option value="EUR">Евро (EUR)</option>
+    </select>
+
+    <div class="result-container">
+      <label for="result_KZT">Тенге (KZT):</label>
+      <input type="text" id="field_KZT" disabled>
+      <br>
+      <label for="result_USD">Доллар (USD):</label>
+      <input type="text" id="field_USD" disabled>
+      <br>
+      <label for="result_EUR">Евро (EUR):</label>
+      <input type="text" id="field_EUR" disabled>
+    </div>  
+  </div>
+
+  <script>
+    function updateConversion() {
+  let amount = parseFloat(document.getElementById('amount').value);
+  let currency = document.getElementById('currency').value;
+
+  let exchangeRates = {
+    'KZT': {'USD': 1/431, 'EUR': 1/509},
+    'USD': {'KZT': 431, 'EUR': 1.17},
+    'EUR': {'KZT': 509, 'USD': 0.85}
+  };
+
+  let result_KZT = document.getElementById('field_KZT');
+  let result_USD = document.getElementById('field_USD');
+  let result_EUR = document.getElementById('field_EUR');
+
+  if (currency === 'KZT') {
+    result_KZT.value = '-';
+    result_USD.value = (amount * exchangeRates['KZT']['USD']).toFixed(2);
+    result_EUR.value = (amount * exchangeRates['KZT']['EUR']).toFixed(2);
+  } else if (currency === 'USD') {
+    result_KZT.value = (amount * exchangeRates['USD']['KZT']).toFixed(2);
+    result_USD.value = '-';
+    result_EUR.value = (amount * exchangeRates['USD']['EUR']).toFixed(2);
+  } else if (currency === 'EUR') {
+    result_KZT.value = (amount * exchangeRates['EUR']['KZT']).toFixed(2);
+    result_USD.value = (amount * exchangeRates['EUR']['USD']).toFixed(2);
+    result_EUR.value = '-';
+  }
+}
+
+  </script>
+</body>
+</html>
